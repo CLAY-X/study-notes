@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="APP" value="prometheus-demo"/>
+    <property name="LOG_HOME" value="./log"/>
+
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="console">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%-5level][%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}][%thread] %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="sys-info">
+        <File>${LOG_HOME}/${APP}.log</File>
+        <append>true</append>
+        <!--过滤器,只打INFO级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- hour rollover -->
+            <FileNamePattern>${LOG_HOME}/${APP}.log.%d{yyyy-MM-dd_HH}</FileNamePattern>
+            <maxHistory>24</maxHistory>
+            <totalSizeCap>50GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%-5level][%d{yyyy-MM-dd'T'HH:mm:ss}][%thread] %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="sys-error">
+        <File>${LOG_HOME}/${APP}-error.log</File>
+        <append>true</append>
+        <!--过滤器,只打ERROR级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- hour rollover -->
+            <FileNamePattern>${LOG_HOME}/${APP}-error.log.%d{yyyy-MM-dd_HH}</FileNamePattern>
+            <maxHistory>24</maxHistory>
+            <totalSizeCap>50GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%-5level][%d{yyyy-MM-dd'T'HH:mm:ss}][%thread] %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

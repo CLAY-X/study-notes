@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: spring-demo
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      #endpoints基础路径前缀，默认是/actuator
+      base-path: /
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      show-details: always
+      defaults:
+        enabled: true
+    heapdump:
+      show-details: always

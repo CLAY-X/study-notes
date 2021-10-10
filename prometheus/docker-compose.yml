@@ -1,0 +1,28 @@
+version: '2'
+
+networks:
+  mynet:
+    driver: bridge
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.14.0
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - mynet
+
+  grafana:
+    image: grafana/grafana:6.5.0
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - mynet
